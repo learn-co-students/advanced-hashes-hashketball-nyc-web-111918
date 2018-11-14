@@ -116,7 +116,141 @@ def game_hash
     }
   }
 end
+=begin
+re-write the hasketball methods,
+using methods: .each, .collect, .select, .map,
+think:
+****** NOTE:
+************ methods return value, (is it the expected value?)
+************ which method most closely achieves the method goal?
+************ how does the method operation correlate to the goal?
+************ create comments describing parameters:
+******************* what is being passed in to the block?
+******************* what are we doing with it?
+=end
 
+=begin
+num_points_scored takes:
+-- :name of a :players
+---- ∃_(:name) | { :name ∈ {:players["Player Name"]} }
+-- on the :home || :away team
+---- { :players ∈ {:home} || :players ∈ {:home} }
+num_points_scored should return a integer value :points
+-- :points symbol is located in:
+-- the players hash of either the :home || or :away team
+-- so, we access a players :points by identifying
+-- which :players "Player Name" is passed to access
+-- the "Player Name" :points symbol
+---- :points ∈ { {:players["Player Name"]} }
+=end
+
+################### Iterative, level by level approach ##################
+=begin
+points = nil
+******** each block 1 ********
+location= :home, :away,
+team_data = { :team_name: "", :colors: [], :players => {} }
+team_data[:players] == game_hash[:home | :away][:players]
+******** each block 1 ********
+******** each block 2 *********
+team_data[:players] => {
+"Player Name" => {
+    :number: 0..n,
+    :shoe: 0..n,
+    :points: 0..n,
+    :rebounds: 0..n,
+    :assists: 0..n,
+    :steals: 0..n,
+    :blocks: 0..n,
+    :slam_dunks: 0..n
+  }
+}
+player = team_data[:players].keys => "Player Name"
+player_hash = team_data[:players]["Player Name"]
+points = player_hash[:points]
+******** end each block 2 *********
+return the points variable updated in each block 2
+=end
+def num_points_scored(name)
+  points = nil
+  game_hash.each {
+    |location, team_data|
+      team_data[:players].each {
+        |player, player_hash|
+        if player == name
+          points = player_hash[:points]
+        end
+      }
+  }
+  points
+end
+
+def player_stats(name)
+  stats = nil
+  game_hash.each {
+    |location, team_data|
+      team_data[:players].each {
+        |player, player_hash|
+        if player == name
+          stats = player_hash
+        end
+      }
+  }
+  stats
+end
+=begin
+Copy & Paste ^^^^^^^ only changing the symbol to return
+Discussed DRY principles with vicky, and this helps to
+really understand why method building helps achieve
+that goal, and simplifies code.
+=end
+
+def shoe_size(name)
+  player_shoe_size = nil
+  game_hash.each {
+    |location, team_data|
+      team_data[:players].each {
+        |player, player_hash|
+        if player == name
+          player_shoe_size = player_hash[:shoe]
+        end
+      }
+  }
+  player_shoe_size
+end
+
+def team_colors(team_name)
+  team_colors_arr = []
+  game_hash.each {
+    |location, team_data|
+      if team_data[:team_name] == team_name
+        for color in team_data[:colors]
+          team_colors_arr << color
+        end
+      end
+  }
+  team_colors_arr
+end
+
+def team_names
+  teams = []
+  game_hash.each {
+    |location, team_data|
+    team_data.each_key {
+      |key|
+      if key == :team_name
+        teams << team_data[:team_name]
+      end
+    }
+    #binding.pry
+  }
+  teams
+end
+
+
+################### Method Building Approach ##################
+
+=begin
 def num_points_scored(name)
   player = find_the_player(name)
   player.fetch(:points)
@@ -167,3 +301,4 @@ end
 def player_biggest_shoe_size
   players.max_by{|player, stats| stats.fetch(:shoe)}[1]
 end
+=end
