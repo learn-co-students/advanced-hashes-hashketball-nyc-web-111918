@@ -198,6 +198,7 @@ def player_stats(name)
   }
   stats
 end
+
 =begin
 Copy & Paste ^^^^^^^ only changing the symbol to return
 Discussed DRY principles with vicky, and this helps to
@@ -247,7 +248,39 @@ def team_names
   teams
 end
 
+def player_numbers(team_name)
+  nums = []
+  game_hash.each {
+    |location, team_data|
+    if team_data[:team_name] == team_name
+      team_data[:players].each {
+        |player, player_hash|
+        nums << player_hash[:number]
+      }
+    end
+  }
+  nums
+end
 
+def largest_shoe_size
+  largest_size = 0
+  player = nil
+  game_hash.each {
+    |location, team_data|
+    team_data[:players].each {
+      |name, player_hash|
+      if shoe_size(name) > largest_size
+        largest_size = shoe_size(name)
+        player = player_hash
+      end
+    }
+  }
+  player
+end
+
+def big_shoe_rebounds
+  largest_shoe_size[:rebounds]
+end
 ################### Method Building Approach ##################
 
 =begin
