@@ -206,6 +206,7 @@ really understand why method building helps achieve
 that goal, and simplifies code.
 =end
 
+def
 def shoe_size(name)
   player_shoe_size = nil
   game_hash.each {
