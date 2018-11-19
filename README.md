@@ -131,7 +131,7 @@ Okay, *now* we're ready to build out methods:
   * Think about how you will find the shoe size of the correct player. How can you check and see if a player's name matches the name that has been passed into the method as an argument?
 * Build a method, `team_colors`, that takes in an argument of the team name and returns an array of that teams colors.
 * Build a method, `team_names`, that operates on the game hash to return an array of the team names.
-* Build a method, `player_numbers`, that takes in an argument of a team name and returns an array of the jersey number's for that team.
+* Build a method, `player_numbers`, that takes in an argument of a team name and returns an array of the jersey numbers for that team.
 * Build a method, `player_stats`, that takes in an argument of a player's name and returns a hash of that player's stats.
   * Check out the following example of the expected return value of the `player_stats` method:
 
